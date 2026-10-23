@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 
-import '../data/livres_data.dart';
+import '../models/livre.dart';
+import '../services/livre_service.dart';
 
 class MaListeScreen extends StatefulWidget {
-  const MaListeScreen({super.key});
+  final List<Livre> livres;
+
+  const MaListeScreen({super.key, required this.livres});
 
   @override
   State<MaListeScreen> createState() => _MaListeScreenState();
@@ -36,6 +39,7 @@ class _MaListeScreenState extends State<MaListeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final livres = widget.livres;
     final livresAffiches = livres
         .where((livre) => _genres[livre.genre]!)
         .where((livre) => !_nouveautesSeulement || livre.nouveaute)
@@ -105,6 +109,7 @@ class _MaListeScreenState extends State<MaListeScreen> {
                     setState(() {
                       livre.lu = value!;
                     });
+                    sauvegarderLivres(livres);
                   },
                 );
               },

@@ -24,4 +24,39 @@ class Livre {
     this.lu = false,
     this.favori = false,
   });
+
+  factory Livre.fromJson(Map<String, dynamic> json) {
+    final hex = (json['couleur'] as String).substring(1);
+    return Livre(
+      id: json['id'] as int,
+      titre: json['titre'] as String,
+      auteur: json['auteur'] as String,
+      genre: json['genre'] as String,
+      annee: json['annee'] as int,
+      note: (json['note'] as num).toDouble(),
+      couleur: Color(int.parse('FF$hex', radix: 16)),
+      nouveaute: json['nouveaute'] as bool,
+      lu: json['lu'] as bool,
+      favori: json['favori'] as bool,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final hex = (couleur.toARGB32() & 0xFFFFFF)
+        .toRadixString(16)
+        .padLeft(6, '0')
+        .toUpperCase();
+    return {
+      'id': id,
+      'titre': titre,
+      'auteur': auteur,
+      'genre': genre,
+      'annee': annee,
+      'note': note,
+      'couleur': '#$hex',
+      'nouveaute': nouveaute,
+      'lu': lu,
+      'favori': favori,
+    };
+  }
 }

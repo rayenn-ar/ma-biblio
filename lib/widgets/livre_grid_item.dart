@@ -38,6 +38,12 @@ class LivreGridItem extends StatelessWidget {
                 ],
               ),
             ),
+            if (livre.lu)
+              const Positioned(
+                top: 8,
+                left: 8,
+                child: Icon(Icons.check_circle, color: Colors.white),
+              ),
             if (livre.favori)
               const Positioned(
                 top: 8,

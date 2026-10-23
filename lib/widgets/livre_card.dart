@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 
 import '../main.dart';
 import '../models/livre.dart';
-import '../screens/detail_screen.dart';
 
 class LivreCard extends StatelessWidget {
   final Livre livre;
+  final VoidCallback onTap;
 
-  const LivreCard({super.key, required this.livre});
+  const LivreCard({super.key, required this.livre, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -19,12 +19,7 @@ class LivreCard extends StatelessWidget {
       color: Colors.white,
       clipBehavior: Clip.antiAlias,
       child: InkWell(
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => DetailScreen(livre: livre)),
-          );
-        },
+        onTap: onTap,
         child: livreTile(livre),
       ),
     );

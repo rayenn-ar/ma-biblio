@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 
+import '../services/livre_service.dart';
+
 class ParametresScreen extends StatelessWidget {
-  const ParametresScreen({super.key});
+  final VoidCallback onReinitialiser;
+
+  const ParametresScreen({super.key, required this.onReinitialiser});
 
   @override
   Widget build(BuildContext context) {
@@ -47,6 +51,37 @@ class ParametresScreen extends StatelessWidget {
               dense: true,
               isThreeLine: true,
               enabled: false,
+            ),
+            ListTile(
+              leading: const Icon(Icons.restart_alt),
+              title: const Text('Réinitialiser ma bibliothèque'),
+              onTap: () {
+                showDialog(
+                  context: context,
+                  builder: (dialogContext) => AlertDialog(
+                    title: const Text('Réinitialiser ma bibliothèque'),
+                    content: const Text(
+                      'Tous les livres lus et les favoris seront effacés.',
+                    ),
+                    actions: [
+                      TextButton(
+                        onPressed: () => Navigator.pop(dialogContext),
+                        child: const Text('Annuler'),
+                      ),
+                      TextButton(
+                        onPressed: () async {
+                          await supprimerSauvegarde();
+                          onReinitialiser();
+                          if (dialogContext.mounted) {
+                            Navigator.pop(dialogContext);
+                          }
+                        },
+                        child: const Text('Réinitialiser'),
+                      ),
+                    ],
+                  ),
+                );
+              },
             ),
           ],
         ).toList(),

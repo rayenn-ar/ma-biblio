@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 
-import '../data/livres_data.dart';
 import '../models/livre.dart';
 import '../widgets/livre_card.dart';
 import '../widgets/livre_grid_item.dart';
 import 'detail_screen.dart';
 
 class GalerieScreen extends StatefulWidget {
-  const GalerieScreen({super.key});
+  final List<Livre> livres;
+
+  const GalerieScreen({super.key, required this.livres});
 
   @override
   State<GalerieScreen> createState() => _GalerieScreenState();
@@ -19,13 +20,16 @@ class _GalerieScreenState extends State<GalerieScreen> {
   Future<void> _ouvrirDetail(Livre livre) async {
     await Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => DetailScreen(livre: livre)),
+      MaterialPageRoute(
+        builder: (context) => DetailScreen(livre: livre, livres: widget.livres),
+      ),
     );
     setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
+    final livres = widget.livres;
     final largeur = MediaQuery.of(context).size.width;
     final int colonnes;
     if (largeur < 600) {
@@ -75,7 +79,10 @@ class _GalerieScreenState extends State<GalerieScreen> {
             )
           : ListView.builder(
               itemCount: livres.length,
-              itemBuilder: (context, index) => LivreCard(livre: livres[index]),
+              itemBuilder: (context, index) => LivreCard(
+                livre: livres[index],
+                onTap: () => _ouvrirDetail(livres[index]),
+              ),
             ),
     );
   }

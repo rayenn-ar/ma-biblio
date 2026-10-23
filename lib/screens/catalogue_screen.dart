@@ -1,13 +1,22 @@
 import 'package:flutter/material.dart';
 
-import '../data/livres_data.dart';
+import '../models/livre.dart';
 import '../widgets/livre_card.dart';
+import 'detail_screen.dart';
 
-class CatalogueScreen extends StatelessWidget {
-  const CatalogueScreen({super.key});
+class CatalogueScreen extends StatefulWidget {
+  final List<Livre> livres;
+
+  const CatalogueScreen({super.key, required this.livres});
 
   @override
+  State<CatalogueScreen> createState() => _CatalogueScreenState();
+}
+
+class _CatalogueScreenState extends State<CatalogueScreen> {
+  @override
   Widget build(BuildContext context) {
+    final livres = widget.livres;
     final nouveautes = livres.where((livre) => livre.nouveaute).toList();
 
     return Column(
@@ -37,7 +46,18 @@ class CatalogueScreen extends StatelessWidget {
         Expanded(
           child: ListView.builder(
             itemCount: livres.length,
-            itemBuilder: (context, index) => LivreCard(livre: livres[index]),
+            itemBuilder: (context, index) => LivreCard(
+              livre: livres[index],
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) =>
+                        DetailScreen(livre: livres[index], livres: livres),
+                  ),
+                ).then((_) => setState(() {}));
+              },
+            ),
           ),
         ),
       ],
