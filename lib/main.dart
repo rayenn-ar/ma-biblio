@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'screens/parametres_screen.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -28,9 +30,8 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('MaBiblio'),
-      ),
+      appBar: AppBar(title: const Text('MaBiblio')),
+      body: const ParametresScreen(),
     );
   }
 }
