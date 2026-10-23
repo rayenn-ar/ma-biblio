@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../data/livres_data.dart';
-import '../main.dart';
+import '../widgets/livre_card.dart';
 
 class CatalogueScreen extends StatelessWidget {
   const CatalogueScreen({super.key});
@@ -35,10 +35,9 @@ class CatalogueScreen extends StatelessWidget {
         ),
         const Text('Tout le catalogue'),
         Expanded(
-          child: ListView.separated(
+          child: ListView.builder(
             itemCount: livres.length,
-            itemBuilder: (context, index) => livreTile(livres[index]),
-            separatorBuilder: (context, index) => const Divider(indent: 72),
+            itemBuilder: (context, index) => LivreCard(livre: livres[index]),
           ),
         ),
       ],
