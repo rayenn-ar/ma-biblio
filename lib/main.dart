@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'data/livres_data.dart';
 import 'models/livre.dart';
+import 'screens/catalogue_screen.dart';
 import 'screens/parametres_screen.dart';
 
 void main() {
@@ -48,10 +48,7 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
-      // Affichage temporaire des 3 premiers livres pour vérifier le rendu.
-      body: Column(
-        children: livres.take(3).map(livreTile).toList(),
-      ),
+      body: const CatalogueScreen(),
     );
   }
 }
