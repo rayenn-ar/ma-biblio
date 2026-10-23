@@ -36,8 +36,10 @@ class _MaListeScreenState extends State<MaListeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final livresAffiches =
-        livres.where((livre) => _genres[livre.genre]!).toList();
+    final livresAffiches = livres
+        .where((livre) => _genres[livre.genre]!)
+        .where((livre) => !_nouveautesSeulement || livre.nouveaute)
+        .toList();
     final nombreLus = livresAffiches.where((livre) => livre.lu).length;
 
     return Scaffold(
